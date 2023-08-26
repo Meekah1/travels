@@ -15,11 +15,18 @@ const initialItems = [
 //))}
 
 export default function App() {
+  //lifting State
+  const [updateItems, setUpdateItems] = useState([]);
+
+  function handleUpdate(data) {
+    setUpdateItems((updateItems) => [...updateItems, data]);
+  }
+
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAddUpdateItems={handleUpdate} />
+      <PackingList updateItems={updateItems} />
       <Stats />
     </div>
   );
@@ -29,7 +36,7 @@ function Logo() {
   return <h1>🌴 Travel lists 💼</h1>;
 }
 
-function Form() {
+function Form({ onAddUpdateItems }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(0);
 
@@ -38,6 +45,8 @@ function Form() {
 
     const newItems = { description, quantity, packed: false, id: Date.now() };
     console.log(newItems);
+
+    onAddUpdateItems(newItems);
 
     setDescription("");
     setQuantity(1);
@@ -69,11 +78,11 @@ function Form() {
   );
 }
 
-function PackingList() {
+function PackingList({ updateItems }) {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((data) => (
+        {updateItems.map((data) => (
           <List item={data} key={data.id} />
         ))}
       </ul>
