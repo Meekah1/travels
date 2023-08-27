@@ -89,7 +89,7 @@ function PackingList({ updateItems, onDeleteItem }) {
     <div className="list">
       <ul>
         {updateItems.map((data) => (
-          <List item={data} key={data.id} />
+          <List item={data} key={data.id} onDeleteItem={onDeleteItem} />
         ))}
       </ul>
     </div>
@@ -103,7 +103,7 @@ function List({ item, onDeleteItem }) {
         {item.quantity}
         {item.description}
       </span>
-      <button onClick={onDeleteItem}>❌</button>
+      <button onClick={() => onDeleteItem(item.id)}>❌</button>
     </li>
   );
 }
