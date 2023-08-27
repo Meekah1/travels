@@ -22,11 +22,17 @@ export default function App() {
     setUpdateItems((updateItems) => [...updateItems, data]);
   }
 
+  function handleDelete(id) {
+    setUpdateItems((updateItems) =>
+      updateItems.filter((updateItems) => updateItems.id !== id)
+    );
+  }
+
   return (
     <div className="app">
       <Logo />
       <Form onAddUpdateItems={handleUpdate} />
-      <PackingList updateItems={updateItems} />
+      <PackingList updateItems={updateItems} onDeleteItem={handleDelete} />
       <Stats />
     </div>
   );
@@ -78,7 +84,7 @@ function Form({ onAddUpdateItems }) {
   );
 }
 
-function PackingList({ updateItems }) {
+function PackingList({ updateItems, onDeleteItem }) {
   return (
     <div className="list">
       <ul>
@@ -90,14 +96,14 @@ function PackingList({ updateItems }) {
   );
 }
 
-function List({ item }) {
+function List({ item, onDeleteItem }) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity}
         {item.description}
       </span>
-      <button>❌</button>
+      <button onClick={onDeleteItem}>❌</button>
     </li>
   );
 }
