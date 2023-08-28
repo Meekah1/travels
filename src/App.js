@@ -2,12 +2,6 @@
 
 import { useState } from "react";
 
-const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: false },
-  { id: 2, description: "Socks", quantity: 12, packed: false },
-  { id: 3, description: "Food", quantity: 3, packed: true },
-];
-
 // {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
 // <option value={num} key={num}>
 // {num}
@@ -28,11 +22,23 @@ export default function App() {
     );
   }
 
+  function handleUpdateItems(id) {
+    setUpdateItems((updateItems) =>
+      updateItems.map((newdata) =>
+        newdata.id === id ? { ...newdata, packed: !newdata.packed } : newdata
+      )
+    );
+  }
+
   return (
     <div className="app">
       <Logo />
       <Form onAddUpdateItems={handleUpdate} />
-      <PackingList updateItems={updateItems} onDeleteItem={handleDelete} />
+      <PackingList
+        updateItems={updateItems}
+        onDeleteItem={handleDelete}
+        onUpdateItems={handleUpdateItems}
+      />
       <Stats />
     </div>
   );
@@ -84,21 +90,31 @@ function Form({ onAddUpdateItems }) {
   );
 }
 
-function PackingList({ updateItems, onDeleteItem }) {
+function PackingList({ updateItems, onDeleteItem, onUpdateItems }) {
   return (
     <div className="list">
       <ul>
         {updateItems.map((data) => (
-          <List item={data} key={data.id} onDeleteItem={onDeleteItem} />
+          <List
+            item={data}
+            key={data.id}
+            onDeleteItem={onDeleteItem}
+            onUpdateItems={onUpdateItems}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function List({ item, onDeleteItem }) {
+function List({ item, onDeleteItem, onUpdateItems }) {
   return (
     <li>
+      <input
+        type="checkbox"
+        value={item.packed}
+        onChange={() => onUpdateItems(item.id)}
+      />
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity}
         {item.description}
