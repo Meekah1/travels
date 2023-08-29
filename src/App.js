@@ -130,10 +130,12 @@ function Stats({ updateItems }) {
     (updateItem) => updateItem.packed
   ).length;
 
+  const numPercent = Math.round((packedItems / numItems) * 100);
+
   return (
     <footer className="stats">
       💼You have {numItems} Items on your list, and you have already Packed
-      {packedItems}(X%)
+      {packedItems}({numPercent}%)
     </footer>
   );
 }
