@@ -39,7 +39,7 @@ export default function App() {
         onDeleteItem={handleDelete}
         onUpdateItems={handleUpdateItems}
       />
-      <Stats />
+      <Stats updateItems={updateItems} />
     </div>
   );
 }
@@ -124,10 +124,16 @@ function List({ item, onDeleteItem, onUpdateItems }) {
   );
 }
 
-function Stats() {
+function Stats({ updateItems }) {
+  const numItems = updateItems.length;
+  const packedItems = updateItems.filter(
+    (updateItem) => updateItem.packed
+  ).length;
+
   return (
     <footer className="stats">
-      💼You have X Items on your list, and you have already Packed X(X%)
+      💼You have {numItems} Items on your list, and you have already Packed
+      {packedItems}(X%)
     </footer>
   );
 }
