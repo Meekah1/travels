@@ -59,6 +59,7 @@ input {
   font-family: inherit;
   border: none;
   border-radius: 10rem;
+  gap: 1rem;
   padding: 1.2rem 3.2rem;
   font-weight: 700;
   font-size: 1.8rem;
