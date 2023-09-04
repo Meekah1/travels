@@ -6,7 +6,7 @@ import Stats from "./Stats";
 import Accordion from "./Accordion";
 
 import { useState } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 // {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
 // <option value={num} key={num}>
@@ -55,21 +55,23 @@ export default function App() {
               </li>
             </ul>
           </nav>
+        </div>
 
-          <Route path="/" exact component={Accordion} />
+        <div className="app">
+          <Logo />
+          <Routes>
+            <Route path="/" element={<Accordion />} />
+          </Routes>
+          <Form onAddUpdateItems={handleUpdate} />
+          <PackingList
+            updateItems={updateItems}
+            onDeleteItem={handleDelete}
+            onUpdateItems={handleUpdateItems}
+            onClearData={handleClearData}
+          />
+          <Stats updateItems={updateItems} />
         </div>
       </Router>
-      <div className="app">
-        <Logo />
-        <Form onAddUpdateItems={handleUpdate} />
-        <PackingList
-          updateItems={updateItems}
-          onDeleteItem={handleDelete}
-          onUpdateItems={handleUpdateItems}
-          onClearData={handleClearData}
-        />
-        <Stats updateItems={updateItems} />
-      </div>
     </>
   );
 }

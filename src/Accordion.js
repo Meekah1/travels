@@ -1,3 +1,5 @@
+import AccordionItems from "./AccordionItem";
+
 const faqs = [
   {
     title: "Where are these chairs assembled?",
@@ -13,6 +15,12 @@ const faqs = [
   },
 ];
 
-export default function Accordion({ data }) {
-  return <div></div>;
+export default function Accordion() {
+  return (
+    <div className="accordion">
+      {faqs.map((el) => (
+        <AccordionItems title={el.title} text={el.text} />
+      ))}
+    </div>
+  );
 }
