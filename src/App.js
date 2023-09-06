@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 export default function App() {
   //lifting State
   const [updateItems, setUpdateItems] = useState([]);
+  const [visibleAccordion, setVisibleAccordion] = useState(false)
 
   function handleUpdate(data) {
     setUpdateItems((updateItems) => [...updateItems, data]);
@@ -44,6 +45,10 @@ export default function App() {
     if (confirmed) setUpdateItems(updateItems && []);
   }
 
+  function toggle() {
+    setVisibleAccordion(!visibleAccordion)
+  }
+
   return (
     <>
       <Router>
@@ -51,16 +56,18 @@ export default function App() {
           <nav>
             <ul>
               <li>
-                <Link to="/">Accordion</Link>
+                <Link to="/accordion" onClick={toggle}>Accordion</Link>
               </li>
             </ul>
           </nav>
+          
         </div>
 
         <div className="app">
-          <Logo />
-          <Routes>
-            <Route path="/" element={<Accordion />} />
+        {visibleAccordion &&  <div>
+        <Logo />
+           <Routes>
+            <Route path="/accordion" element={<Accordion />} />
           </Routes>
           <Form onAddUpdateItems={handleUpdate} />
           <PackingList
@@ -69,7 +76,8 @@ export default function App() {
             onUpdateItems={handleUpdateItems}
             onClearData={handleClearData}
           />
-          <Stats updateItems={updateItems} />
+          <Stats updateItems={updateItems} /> 
+          </div>}
         </div>
       </Router>
     </>
