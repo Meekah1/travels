@@ -14,10 +14,28 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 //</option>
 //))}
 
+const faqs = [
+  {
+    title: "Where are these chairs assembled?",
+    text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium, quaerat temporibus quas dolore provident nisi ut aliquid ratione beatae sequi aspernatur veniam repellendus.",
+  },
+  {
+    title: "How long do I have to return my chair?",
+    text: "Pariatur recusandae dignissimos fuga voluptas unde optio nesciunt commodi beatae, explicabo natus.",
+  },
+  {
+    title: "Do you ship to countries outside the EU?",
+    text: "Excepturi velit laborum, perspiciatis nemo perferendis reiciendis aliquam possimus dolor sed! Dolore laborum ducimus veritatis facere molestias!",
+  },
+];
+
 export default function App() {
   //lifting State
   const [updateItems, setUpdateItems] = useState([]);
   const [visibleAccordion, setVisibleAccordion] = useState(false)
+  
+
+  
 
   function handleUpdate(data) {
     setUpdateItems((updateItems) => [...updateItems, data]);
@@ -49,6 +67,11 @@ export default function App() {
     setVisibleAccordion(!visibleAccordion)
   }
 
+  // function handleClose() {
+  //   setIsOpen((isOpen) => isOpen.filter((isOpen) => isOpen.title))
+  //   console.log(isOpen.title)
+  // }
+
   return (
     <>
       <Router>
@@ -64,11 +87,9 @@ export default function App() {
         </div>
 
         <div className="app">
-        {visibleAccordion &&  <div>
+        {!visibleAccordion ? <div>
         <Logo />
-           <Routes>
-            <Route path="/accordion" element={<Accordion />} />
-          </Routes>
+           
           <Form onAddUpdateItems={handleUpdate} />
           <PackingList
             updateItems={updateItems}
@@ -77,7 +98,9 @@ export default function App() {
             onClearData={handleClearData}
           />
           <Stats updateItems={updateItems} /> 
-          </div>}
+          </div> :<Routes>
+            <Route path="/accordion" element={<Accordion data={faqs}  />} />
+          </Routes> }
         </div>
       </Router>
     </>
